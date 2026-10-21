@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabcove: save, restore and back up your Chrome tabs</title>
+<meta name="description" content="Tabcove saves your tabs automatically, restores sessions in one click and keeps backups on your computer. No account, no sync server. Free, Pro $9.99 once.">
+<link rel="icon" href="icon.png">
+<meta property="og:title" content="Tabcove: never lose your tabs again">
+<meta property="og:description" content="Automatic tab backups for Chrome, restore in one click, everything stays on your computer.">
+<meta property="og:image" content="https://mern-umair.github.io/tabcove/popup.png">
+<style>
+  :root { --teal: #0f6e8c; --teal-dark: #0b566d; --ink: #1c2b33; --muted: #5b6b74; --bg: #f6f9fb; --card: #ffffff; --line: #dbe5ea; }
+  @media (prefers-color-scheme: dark) { :root { --ink: #e8eef2; --muted: #9fb0ba; --bg: #0f1a20; --card: #16242c; --line: #263640; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 17px/1.55 system-ui, "Segoe UI", Roboto, sans-serif; color: var(--ink); background: var(--bg); }
+  a { color: var(--teal); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 18px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: var(--ink); text-decoration: none; }
+  .brand img { width: 32px; height: 32px; border-radius: 8px; }
+  nav a { margin-left: 18px; text-decoration: none; font-weight: 600; }
+  .hero { padding: 48px 0 32px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 36px; align-items: center; }
+  h1 { font-size: 44px; line-height: 1.1; margin: 0 0 16px; letter-spacing: -0.5px; }
+  .lead { font-size: 20px; color: var(--muted); margin: 0 0 26px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn { display: inline-block; padding: 13px 22px; border-radius: 10px; font-weight: 700; text-decoration: none; border: 2px solid var(--teal); }
+  .btn.primary { background: var(--teal); color: #fff; }
+  .btn.primary:hover { background: var(--teal-dark); }
+  .btn.ghost { color: var(--teal); background: transparent; }
+  .note { font-size: 14px; color: var(--muted); margin-top: 10px; }
+  .shot { border-radius: 14px; box-shadow: 0 18px 50px rgba(0,0,0,.18); width: 100%; height: auto; border: 1px solid var(--line); }
+  section { padding: 36px 0; }
+  h2 { font-size: 30px; margin: 0 0 20px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+  .card h3 { margin: 0 0 8px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .plan { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+  .plan.pro { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(15,110,140,.12); }
+  .price { font-size: 34px; font-weight: 800; margin: 6px 0 2px; }
+  .price small { font-size: 15px; font-weight: 600; color: var(--muted); }
+  .plan ul { padding-left: 20px; margin: 14px 0 20px; }
+  .plan li { margin: 6px 0; }
+  .faq details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; }
+  .faq summary { font-weight: 700; cursor: pointer; }
+  .faq p { color: var(--muted); margin: 10px 0 0; }
+  footer { padding: 30px 0 50px; color: var(--muted); font-size: 15px; border-top: 1px solid var(--line); margin-top: 20px; }
+  kbd { font: 14px ui-monospace, Consolas, monospace; background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+  @media (max-width: 820px) { .hero { grid-template-columns: 1fr; padding-top: 28px; } h1 { font-size: 34px; } .grid, .plans { grid-template-columns: 1fr; } nav a { margin-left: 12px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="#"><img src="icon.png" alt="" width="32" height="32"> Tabcove</a>
+    <nav><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="https://github.com/Mern-Umair/tabcove/blob/main/PRIVACY.md">Privacy</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Never lose your tabs again.</h1>
+      <p class="lead">Tabcove backs up every Chrome window automatically, keeps the windows you close, and brings any session back in one click. Everything stays on your computer.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://chromewebstore.google.com/search/Tabcove">Add to Chrome, free</a>
+        <a class="btn ghost" href="https://tabcove.gumroad.com/l/pro">Get Pro, $9.99 once</a>
+      </div>
+      <p class="note">Works in Chrome, Edge and Brave. No account, no sync server, no analytics.</p>
+    </div>
+    <img class="shot" src="popup.png" alt="The Tabcove popup: one click to save, one to save and close" width="1280" height="800">
+  </div>
+
+  <section id="features">
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card"><h3>Backs up on its own</h3><p>Every window is saved on a timer, only when something changed. A window you close is kept so you can bring it back.</p></div>
+      <div class="card"><h3>Save sessions by name</h3><p>Click the toolbar button or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>. "Save and close all" frees memory and keeps everything.</p></div>
+      <div class="card"><h3>Restores in seconds</h3><p>Open a whole session, one window, or just the tabs you tick. Tabs load only when you click them, so 200 tabs come back without eating RAM.</p></div>
+      <div class="card"><h3>Keeps the details</h3><p>Pinned tabs, tab groups with their names and colours, and which window each tab was in.</p></div>
+      <div class="card"><h3>Finds anything</h3><p>Search titles and addresses across every saved session and backup.</p></div>
+      <div class="card"><h3>Your data stays yours</h3><p>Stored in your browser profile only. Export a file any time; import OneTab and Session Buddy exports in a minute.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <img class="shot" src="manager.png" alt="The Tabcove manager page listing open windows, saved sessions and backups" width="1280" height="800">
+  </section>
+
+  <section id="pricing">
+    <h2>Pricing</h2>
+    <div class="plans">
+      <div class="plan">
+        <strong>Free</strong>
+        <div class="price">$0</div>
+        <ul>
+          <li>Automatic backups for the last 24 hours</li>
+          <li>5 saved sessions</li>
+          <li>Closed windows and previous session</li>
+          <li>Search and export</li>
+        </ul>
+        <a class="btn ghost" href="https://chromewebstore.google.com/search/Tabcove">Add to Chrome</a>
+      </div>
+      <div class="plan pro">
+        <strong>Pro</strong>
+        <div class="price">$9.99 <small>once, not a subscription</small></div>
+        <ul>
+          <li>Unlimited saved sessions</li>
+          <li>Backups kept as long as you choose</li>
+          <li>Import from OneTab and Session Buddy</li>
+          <li>All future updates, every computer you use</li>
+        </ul>
+        <a class="btn primary" href="https://tabcove.gumroad.com/l/pro">Buy on Gumroad</a>
+        <p class="note">You get a licence key by email. Paste it in Tabcove, Settings. 14-day refund if it does not work for you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="faq">
+    <h2>Questions</h2>
+    <details><summary>Chrome already restores tabs. Why Tabcove?</summary><p>Chrome keeps only the last session and a short list of recently closed tabs. After a crash, an update or an accidental new window, that is gone. Tabcove keeps timed backups, closed windows and named sessions for as long as you want, and lets you search them.</p></details>
+    <details><summary>Does anything leave my computer?</summary><p>No. There is no account and no server. The only network request Tabcove ever makes is the licence check with Gumroad if you buy Pro. Read the <a href="https://github.com/Mern-Umair/tabcove/blob/main/PRIVACY.md">privacy policy</a>.</p></details>
+    <details><summary>Can I move from OneTab or Session Buddy?</summary><p>Yes. Export from the old extension, then Settings, Import in Tabcove. Both formats are read directly (Pro).</p></details>
+    <details><summary>What happens to my data if I uninstall?</summary><p>Chrome deletes the extension storage. Export a file first from Settings if you want to keep it.</p></details>
+    <details><summary>How do I get help?</summary><p>Email <a href="mailto:umairii2207@gmail.com">umairii2207@gmail.com</a> or open an issue on <a href="https://github.com/Mern-Umair/tabcove/issues">GitHub</a>.</p></details>
+  </section>
+
+  <footer>
+    Tabcove is made by Umair Tahir. <a href="https://github.com/Mern-Umair/tabcove">Source on GitHub</a> · <a href="https://github.com/Mern-Umair/tabcove/blob/main/PRIVACY.md">Privacy</a> · <a href="https://tabcove.gumroad.com/l/pro">Pro</a>
+  </footer>
+</div>
+</body>
+</html>
