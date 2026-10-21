@@ -4,7 +4,7 @@
 import type { License } from "./model.ts";
 
 /** Set to the Gumroad product ID once the product exists; empty disables licence checks. */
-export const GUMROAD_PRODUCT_ID = "";
+export const GUMROAD_PRODUCT_ID = "xPNtJzDnSZKdAAjTGUiBhw==";
 export const PRO_PRICE_LABEL = "$9.99 once";
 export const PRO_URL = "https://tabcove.gumroad.com/l/pro";
 

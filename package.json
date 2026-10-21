@@ -1,6 +1,6 @@
 {
-  "name": "tabnook",
-  "version": "1.0.0",
+  "name": "tabcove",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "description": "Chrome extension that saves, restores and backs up tabs and windows.",

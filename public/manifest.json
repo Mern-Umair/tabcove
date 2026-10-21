@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Tabcove: Save, Restore & Back Up Tabs",
   "short_name": "Tabcove",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Never lose your tabs again. Auto-saves every window, restores sessions in one click, backs up tabs on your computer. No account.",
   "minimum_chrome_version": "116",
   "icons": {
