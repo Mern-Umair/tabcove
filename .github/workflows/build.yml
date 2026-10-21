@@ -1,0 +1,31 @@
+# Type-checks, tests, builds and zips the extension on every push. The zip on the
+# run page (Artifacts) is what gets uploaded to the Chrome Web Store.
+name: Build extension
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: Chrome for Testing
+        run: npx --yes @puppeteer/browsers install chrome@stable --path .cache
+      - name: Browser test
+        run: npm run test:e2e
+      - run: npm run zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tabcove-zip
+          path: tabcove-*.zip

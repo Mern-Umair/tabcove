@@ -373,7 +373,7 @@ try {
   );
   await evaluate(
     manager,
-    `chrome.runtime.sendMessage({ type: 'delete', ids: ${JSON.stringify(index.filter((s) => s.kind === "saved").map((s) => s.id))} })`,
+    `(async () => { const i = (await chrome.storage.local.get('index')).index || []; return chrome.runtime.sendMessage({ type: 'delete', ids: i.filter(s => s.kind === 'saved').map(s => s.id) }); })()`,
   );
   const imported = await evaluate(
     manager,
