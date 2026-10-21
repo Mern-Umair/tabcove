@@ -1,0 +1,38 @@
+Tabcove saves your tabs so a crash, an accidental close or a "restart to update" never costs you a day of research again.
+
+SAVE TABS WITH ONE CLICK
+• Save all windows as a named session from the toolbar button or Ctrl+Shift+S
+• "Save and close all windows" to clear the decks and free memory, with everything kept
+• Sessions keep pinned tabs, tab groups (names and colours) and which window each tab was in
+
+RESTORE TABS THE WAY YOU WANT
+• Open a whole session, one window, or just the tabs you tick
+• Tabs open without loading until you click them, so 200 tabs come back in seconds and use almost no memory
+• Open into new windows or into the window you are in
+
+AUTOMATIC BACKUPS, SO THERE IS NOTHING TO REMEMBER
+• Every window is backed up on a timer (every 30 minutes by default; only when something changed)
+• A window you close is kept as a "closed window" you can bring back
+• What was open before the browser last closed is kept as the previous session
+• Crash recovery: reopen everything from the last backup
+
+FIND ANY TAB YOU EVER SAVED
+• Search titles and addresses across every saved session and backup
+• Filter inside a session, select tabs, open or remove them
+
+YOUR DATA STAYS ON YOUR COMPUTER
+• No account, no sign-in, no sync server, no analytics
+• Everything is stored in your browser profile; export it as a file any time, import it on another computer
+• Imports OneTab exports, Session Buddy exports and plain lists of links, so switching takes a minute
+• Tabcove never reads the content of your pages; it only needs the tab titles and addresses
+
+FREE AND PRO
+Free: automatic backups for the last 24 hours, 5 saved sessions, search, export. That is enough for most people.
+Pro ($9.99 once, no subscription): unlimited saved sessions, every backup kept for as long as you set, import. One payment, works on all your computers.
+
+WHO IT IS FOR
+Researchers, developers, students, anyone with 40 tabs open who has lost them all at least once. If you used Session Buddy, OneTab, Tab Session Manager or Toby and want something simpler and safer, this is it.
+
+Keyboard shortcuts: Ctrl+Shift+S saves all windows, Ctrl+Shift+Y opens the manager (change them at chrome://extensions/shortcuts).
+
+Questions or ideas: umairii2207@gmail.com
