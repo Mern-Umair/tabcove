@@ -274,6 +274,53 @@ try {
     `(() => { const i = document.querySelector('.toolbar input'); i.value = ''; i.dispatchEvent(new Event('input', { bubbles: true })); return true; })()`,
   );
 
+  // Tab groups: group two of the pages, check the snapshot keeps the group, then that restore rebuilds it.
+  await evaluate(
+    manager,
+    `(async () => {
+    const tabs = await chrome.tabs.query({ url: [${JSON.stringify(URLS.b)}, ${JSON.stringify(URLS.c)}] });
+    const g = await chrome.tabs.group({ tabIds: tabs.map(t => t.id) });
+    await chrome.tabGroups.update(g, { title: "Docs", color: "blue" });
+    return true;
+  })()`,
+  );
+  const grouped = await waitFor(async () => {
+    const s = await evaluate(manager, `chrome.storage.local.get('s:current').then(d => d['s:current'])`);
+    const w = s?.windows.find((w) => w.groups.some((g) => g.title === "Docs"));
+    return w && w.tabs.filter((t) => t.group === 0).length === 2 ? w : null;
+  });
+  check("a tab group is captured with its title and both tabs", grouped.groups[0].color === "blue", grouped.groups);
+  const savedWithGroup = await evaluate(manager, `chrome.runtime.sendMessage({ type: 'save', name: 'grouped' })`);
+  check(
+    "saving keeps the group",
+    savedWithGroup.ok && savedWithGroup.session.windows.some((w) => w.groups.length === 1),
+    savedWithGroup,
+  );
+  await evaluate(
+    manager,
+    `(async () => chrome.tabs.ungroup((await chrome.tabs.query({ url: [${JSON.stringify(URLS.b)}, ${JSON.stringify(URLS.c)}] })).map(t => t.id)).then(() => true))()`,
+  );
+  await evaluate(
+    manager,
+    `chrome.runtime.sendMessage({ type: 'restore', target: { sessionId: ${JSON.stringify(savedWithGroup.session.id)} } })`,
+  );
+  const rebuilt = await waitFor(async () => {
+    const groups = await evaluate(manager, `chrome.tabGroups.query({ title: 'Docs' })`);
+    if (!groups.length) return null;
+    const n = await evaluate(manager, `chrome.tabs.query({ groupId: ${groups[0].id} }).then(t => t.length)`);
+    return n === 2 ? groups[0] : null;
+  });
+  check("restore rebuilds the tab group with two tabs", rebuilt.color === "blue", rebuilt);
+  await evaluate(
+    manager,
+    `chrome.runtime.sendMessage({ type: 'delete', ids: [${JSON.stringify(savedWithGroup.session.id)}] })`,
+  );
+  await evaluate(
+    manager,
+    `(async () => { const w = (await chrome.tabs.query({ groupId: ${rebuilt.id} }))[0]?.windowId; if (w !== undefined) await chrome.windows.remove(w); return true; })()`,
+  );
+  await sleep(1500);
+
   // Close the pages, then restore the saved session into a new window.
   await evaluate(
     manager,

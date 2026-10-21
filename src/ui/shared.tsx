@@ -40,7 +40,8 @@ export function timeAgo(when: number, now = Date.now()): string {
 }
 
 export function plural(n: number, word: string): string {
-  return `${n} ${word}${n === 1 ? "" : "s"}`;
+  if (n === 1) return `1 ${word}`;
+  return `${n} ${word}${/(ch|sh|s|x|z)$/.test(word) ? "es" : "s"}`;
 }
 
 /** The session index, refreshed whenever storage changes. */
