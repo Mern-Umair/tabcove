@@ -81,10 +81,19 @@ const chrome = spawn(
     "--no-first-run",
     "--no-default-browser-check",
     "--disable-features=TranslateUI",
+    // Ubuntu 24.04 (GitHub runners) blocks Chrome's sandbox for unpackaged binaries.
+    ...(process.platform === "linux" ? ["--no-sandbox", "--disable-dev-shm-usage"] : []),
     "about:blank",
   ],
-  { stdio: "ignore" },
+  { stdio: ["ignore", "ignore", "pipe"] },
 );
+let chromeStderr = "";
+chrome.stderr.on("data", (d) => (chromeStderr = (chromeStderr + d).slice(-4000)));
+chrome.on("exit", (code) => {
+  if (code !== null && code !== 0)
+    console.error(`Chrome exited with code ${code}
+${chromeStderr}`);
+});
 
 let passes = 0;
 let failures = 0;
@@ -120,7 +129,7 @@ async function waitFor(fn, attempts = 80, every = 250) {
     }
     await sleep(every);
   }
-  throw new Error("timed out waiting");
+  throw new Error("timed out waiting" + (chromeStderr ? "\nChrome stderr:\n" + chromeStderr : ""));
 }
 
 // ---- a tiny CDP client over the browser websocket, with per-target sessions ----
