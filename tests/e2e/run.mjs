@@ -5,6 +5,7 @@ import { spawn } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const root = resolve(import.meta.dirname, "..", "..");
 const dist = join(root, "dist");
@@ -56,7 +57,7 @@ mkdirSync(pages, { recursive: true });
 const pageUrl = (name, title) => {
   const file = join(pages, `${name}.html`);
   writeFileSync(file, `<!doctype html><title>${title}</title><h1>${title}</h1>`);
-  return "file:///" + file.replace(/\\/g, "/");
+  return pathToFileURL(file).href;
 };
 const URLS = {
   a: pageUrl("a", "Alpha page"),
