@@ -2,7 +2,7 @@
 // timed backups, remembers closed windows, and does the work the pages ask for.
 import { captureWindows, fingerprint, type LiveGroup, type LiveWindow } from "@/lib/capture.ts";
 import { parseImport } from "@/lib/import.ts";
-import { isActive, needsRecheck, verifyKey } from "@/lib/license.ts";
+import { isActive, needsRecheck, PRO_PRICE_LABEL, verifyKey } from "@/lib/license.ts";
 import type { Request, Response } from "@/lib/messages.ts";
 import {
   countTabs,
@@ -172,6 +172,8 @@ async function onStartup(): Promise<void> {
 async function onInstalled(details: chrome.runtime.InstalledDetails): Promise<void> {
   await scheduleBackupAlarm();
   scheduleSnapshot();
+  const settings = await getSettings();
+  if (!settings.installedAt) await setSettings({ installedAt: Date.now() });
   if (details.reason === "install") await chrome.tabs.create({ url: `${MANAGER_URL}#welcome` });
 }
 
@@ -210,7 +212,7 @@ async function saveSession(name?: string): Promise<Response> {
     return {
       ok: false,
       limit: true,
-      error: `The free version keeps ${FREE_SAVED_SESSIONS} saved sessions. Delete one, or upgrade to Pro for unlimited sessions.`,
+      error: `Free keeps ${FREE_SAVED_SESSIONS} saved sessions. Delete one, or get Pro (${PRO_PRICE_LABEL}) for unlimited sessions.`,
     };
   }
   const current = await snapshot();
@@ -225,6 +227,8 @@ async function saveSession(name?: string): Promise<Response> {
     windows: current.windows,
   };
   const summary = await putSession(session);
+  const settings = await getSettings();
+  await setSettings({ saveCount: settings.saveCount + 1 });
   return { ok: true, summary, session };
 }
 

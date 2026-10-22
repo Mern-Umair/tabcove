@@ -66,6 +66,12 @@ export type Settings = {
   /** Skip pinned tabs when capturing. */
   ignorePinned: boolean;
   theme: "system" | "light" | "dark";
+  /** When the extension was first installed (ms since epoch); 0 if unknown. */
+  installedAt: number;
+  /** How many sessions the user has saved, for the review ask. */
+  saveCount: number;
+  /** The one-time review ask was shown and answered. */
+  reviewPromptDone: boolean;
 };
 
 export const defaultSettings: Settings = {
@@ -75,6 +81,9 @@ export const defaultSettings: Settings = {
   restoreIntoCurrentWindow: false,
   ignorePinned: false,
   theme: "system",
+  installedAt: 0,
+  saveCount: 0,
+  reviewPromptDone: false,
 };
 
 export type License = {

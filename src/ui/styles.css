@@ -220,6 +220,38 @@ label.row {
   font-size: 12.5px;
 }
 
+/* ---- Pro card and review ask ---- */
+.procard {
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  margin-bottom: 16px;
+}
+.procard h2 {
+  margin-top: 0;
+}
+.procard ul {
+  margin: 8px 0 14px;
+  padding-left: 20px;
+  display: grid;
+  gap: 4px;
+}
+.procard .row,
+.review .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.review {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--accent-soft);
+  margin-bottom: 4px;
+}
+
 /* ---- notices ---- */
 .notice {
   padding: 10px 12px;

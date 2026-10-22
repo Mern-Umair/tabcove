@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { send } from "@/lib/messages.ts";
-import { FREE_SAVED_SESSIONS, type SessionSummary } from "@/lib/model.ts";
-import { PRO_URL } from "@/lib/license.ts";
+import { FREE_SAVED_SESSIONS, type SessionSummary, type Settings } from "@/lib/model.ts";
+import { PRO_PRICE_LABEL, PRO_URL } from "@/lib/license.ts";
 import { applyTheme, Icon, plural, timeAgo, useIndex, usePro, useSettings } from "@/ui/shared.tsx";
 import { SearchView } from "./Search.tsx";
 import { SessionView } from "./SessionView.tsx";
@@ -40,6 +40,7 @@ export function App() {
   const [settings, updateSettings] = useSettings();
   const { pro, refresh: refreshPro } = usePro();
   const [toast, setToast] = useState<{ text: string; kind: string } | null>(null);
+  const [proCard, setProCard] = useState(false);
   const [showAllBackups, setShowAllBackups] = useState(false);
   const [query, setQuery] = useState(route.view === "search" ? route.q : "");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -72,6 +73,11 @@ export function App() {
   }, [route]);
 
   const notify: Toast = (text, kind = "ok") => {
+    // A free-limit warning gets the Pro card (what Pro gives, "Maybe later") instead of a bare toast.
+    if (kind === "warn" && !pro) {
+      setProCard(true);
+      return;
+    }
     setToast({ text, kind });
     clearTimeout(toastTimer.current);
     toastTimer.current = setTimeout(() => setToast(null), 3200);
@@ -179,6 +185,7 @@ export function App() {
 
         <div className="spacer" />
         <div className="foot">
+          {settings && <ReviewAsk settings={settings} update={updateSettings} />}
           {!pro && (
             <a className="btn block" href={PRO_URL} target="_blank" rel="noopener">
               Get Pro · unlimited sessions
@@ -196,6 +203,7 @@ export function App() {
       </aside>
 
       <main className="main">
+        {proCard && !pro && <ProCard saved={saved.length} onClose={() => setProCard(false)} />}
         {route.view === "session" && <SessionView id={route.id} notify={notify} pro={pro} />}
         {route.view === "search" && <SearchView query={route.q} notify={notify} />}
         {route.view === "settings" && settings && (
@@ -209,6 +217,66 @@ export function App() {
           {toast.text}
         </div>
       )}
+    </div>
+  );
+}
+
+/** Shown when a free limit is hit: what Pro gives, the price, and a way out that is not buying. */
+function ProCard({ saved, onClose }: { saved: number; onClose: () => void }) {
+  return (
+    <section className="card procard" role="dialog" aria-label="Tabcove Pro">
+      <h2>You have {saved} saved sessions, the free limit</h2>
+      <p>Delete a session you no longer need, or get Pro once and never think about it again:</p>
+      <ul>
+        <li>Unlimited saved sessions</li>
+        <li>Every backup kept for as long as you choose (free keeps 24 hours)</li>
+        <li>Import from OneTab and Session Buddy</li>
+        <li>All future updates, on every computer you use</li>
+      </ul>
+      <div className="row">
+        <a className="btn primary" href={PRO_URL} target="_blank" rel="noopener">
+          Get Pro, {PRO_PRICE_LABEL}
+        </a>
+        <button className="btn" type="button" onClick={onClose}>
+          Maybe later
+        </button>
+        <span className="small muted">Not a subscription. 14-day refund if it does not work for you.</span>
+      </div>
+    </section>
+  );
+}
+
+const REVIEW_AFTER_MS = 7 * 24 * 60 * 60 * 1000;
+const REVIEW_AFTER_SAVES = 3;
+
+/** Where this install came from decides where a review goes. */
+function reviewUrl(): string {
+  const id = chrome.runtime.id;
+  return navigator.userAgent.includes("Edg/")
+    ? `https://microsoftedge.microsoft.com/addons/detail/${id}`
+    : `https://chromewebstore.google.com/detail/${id}/reviews`;
+}
+
+/** One-time, after a week of real use. Asking on day one gets far fewer reviews. */
+function ReviewAsk({ settings, update }: { settings: Settings; update: (patch: Partial<Settings>) => Promise<void> }) {
+  const due =
+    !settings.reviewPromptDone &&
+    settings.installedAt > 0 &&
+    Date.now() - settings.installedAt >= REVIEW_AFTER_MS &&
+    settings.saveCount >= REVIEW_AFTER_SAVES;
+  if (!due) return null;
+  const done = () => void update({ reviewPromptDone: true });
+  return (
+    <div className="review" role="note">
+      <span className="small">Is Tabcove useful? A short review helps others find it.</span>
+      <div className="row">
+        <a className="btn sm primary" href={reviewUrl()} target="_blank" rel="noopener" onClick={done}>
+          Write a review
+        </a>
+        <button className="btn sm ghost" type="button" onClick={done}>
+          Not now
+        </button>
+      </div>
     </div>
   );
 }

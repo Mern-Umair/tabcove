@@ -419,6 +419,32 @@ try {
     limit.map((r) => r.ok),
   );
 
+  // Hitting the limit from the manager's own Save button shows the Pro card, and "Maybe later" closes it.
+  await evaluate(manager, "document.querySelector('.sidebar .btn.primary').click(); true");
+  const cardShown = await waitFor(
+    () => evaluate(manager, "document.querySelector('.procard') !== null"),
+    20,
+    200,
+  ).catch(() => false);
+  const cardText = await evaluate(manager, "document.querySelector('.procard')?.textContent ?? ''");
+  await evaluate(
+    manager,
+    "[...document.querySelectorAll('.procard button')].find(b => b.textContent.includes('Maybe later'))?.click(); true",
+  );
+  await sleep(200);
+  const cardGone = await evaluate(manager, "document.querySelector('.procard') === null");
+  check(
+    "free limit shows the Pro card with the price, and Maybe later closes it",
+    cardShown === true && /Unlimited saved sessions/.test(cardText) && cardText.includes("$9.99") && cardGone,
+    { cardShown, cardGone, cardText: cardText.slice(0, 80) },
+  );
+  const counters = await evaluate(manager, "chrome.storage.local.get('settings').then(d => d.settings)");
+  check(
+    "install date and save count are recorded",
+    counters && counters.installedAt > 0 && counters.saveCount >= 4,
+    counters && { installedAt: counters.installedAt, saveCount: counters.saveCount },
+  );
+
   // Export and import round trip.
   const exported = await evaluate(
     manager,

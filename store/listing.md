@@ -58,6 +58,7 @@ YOUR DATA STAYS ON YOUR COMPUTER
 FREE AND PRO
 Free: automatic backups for the last 24 hours, 5 saved sessions, search, export. That is enough for most people.
 Pro ($9.99 once, no subscription): unlimited saved sessions, every backup kept for as long as you set, import. One payment, works on all your computers.
+Pro is sold by the developer (not by Google or Microsoft) through Gumroad, with a 14-day refund if it does not work for you.
 
 WHO IT IS FOR
 Researchers, developers, students, anyone with 40 tabs open who has lost them all at least once. If you used Session Buddy, OneTab, Tab Session Manager or Toby and want something simpler and safer, this is it.

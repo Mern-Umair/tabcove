@@ -45,7 +45,10 @@ function Popup() {
       setMessage({ text: closeAfter ? "Saved. Closing windows…" : `Saved “${response.summary?.name}”.`, kind: "ok" });
       if (closeAfter) setTimeout(() => window.close(), 400);
     } else {
-      setMessage({ text: response.error, kind: response.limit ? "warn" : "danger" });
+      setMessage({
+        text: response.limit ? `${response.error} Pro is one payment, not a subscription.` : response.error,
+        kind: response.limit ? "warn" : "danger",
+      });
     }
   }
 

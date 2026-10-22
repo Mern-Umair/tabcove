@@ -81,7 +81,11 @@ async function attach(targetId, width = 1280, height = 800, scale = 1) {
   const { sessionId } = await send("Target.attachToTarget", { targetId, flatten: true });
   await send("Runtime.enable", {}, sessionId);
   await send("Page.enable", {}, sessionId);
-  await send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: scale, mobile: false }, sessionId);
+  await send(
+    "Emulation.setDeviceMetricsOverride",
+    { width, height, deviceScaleFactor: scale, mobile: false },
+    sessionId,
+  );
   return sessionId;
 }
 async function evaluate(sessionId, expression) {
@@ -91,7 +95,11 @@ async function evaluate(sessionId, expression) {
 }
 async function png(sessionId, width, height, scale = 1) {
   await sleep(500);
-  const { data } = await send("Page.captureScreenshot", { format: "png", clip: { x: 0, y: 0, width, height, scale } }, sessionId);
+  const { data } = await send(
+    "Page.captureScreenshot",
+    { format: "png", clip: { x: 0, y: 0, width, height, scale } },
+    sessionId,
+  );
   return Buffer.from(data, "base64");
 }
 
@@ -108,7 +116,12 @@ async function frame(managerPng, caption, popupPng) {
     const shadowLeft = 1280 - meta.width - 24 - 20;
     const shadowPng = await sharp(shadow)
       .blur(12)
-      .extract({ left: 0, top: 0, width: Math.min(meta.width + 40, 1280 - shadowLeft), height: Math.min(meta.height + 40, 800 - 2) })
+      .extract({
+        left: 0,
+        top: 0,
+        width: Math.min(meta.width + 40, 1280 - shadowLeft),
+        height: Math.min(meta.height + 40, 800 - 2),
+      })
       .png()
       .toBuffer();
     layers.push({ input: shadowPng, left: shadowLeft, top: 2 });
@@ -138,7 +151,11 @@ try {
       try {
         const { sessionId } = await send("Target.attachToTarget", { targetId: t.targetId, flatten: true });
         await send("Runtime.enable", {}, sessionId);
-        const r = await send("Runtime.evaluate", { expression: "chrome.runtime.getManifest().short_name", returnByValue: true }, sessionId);
+        const r = await send(
+          "Runtime.evaluate",
+          { expression: "chrome.runtime.getManifest().short_name", returnByValue: true },
+          sessionId,
+        );
         if (r.result?.value === "Tabcove") return t;
       } catch {
         // skip
@@ -151,7 +168,10 @@ try {
   const { targetId } = await send("Target.createTarget", { url: `chrome-extension://${id}/manager.html` });
   const page = await attach(targetId);
   await waitFor(() => evaluate(page, "document.querySelector('.sidebar') !== null"));
-  await evaluate(page, `chrome.tabs.query({ url: 'chrome-extension://${id}/manager.html#welcome' }).then(t => Promise.all(t.map(x => chrome.tabs.remove(x.id)))).then(() => true)`);
+  await evaluate(
+    page,
+    `chrome.tabs.query({ url: 'chrome-extension://${id}/manager.html#welcome' }).then(t => Promise.all(t.map(x => chrome.tabs.remove(x.id)))).then(() => true)`,
+  );
 
   const work = [
     "https://github.com/",
@@ -171,7 +191,9 @@ try {
     "https://www.bbc.com/news",
     "https://www.reddit.com/r/productivity/",
   ];
-  const w2id = await evaluate(page, `(async () => {
+  const w2id = await evaluate(
+    page,
+    `(async () => {
     const w = await chrome.windows.getCurrent();
     for (const url of ${JSON.stringify(work)}) await chrome.tabs.create({ windowId: w.id, url, active: false });
     const w2 = await chrome.windows.create({ url: ${JSON.stringify(research[0])}, focused: false });
@@ -181,7 +203,8 @@ try {
     const ids = (await chrome.tabs.query({ windowId: w.id })).filter(t => /mozilla|react.dev|vercel/.test(t.url || '')).map(t => t.id);
     if (ids.length) { const g = await chrome.tabs.group({ tabIds: ids }); await chrome.tabGroups.update(g, { title: 'Docs', color: 'blue' }); }
     return w2.id;
-  })()`);
+  })()`,
+  );
   await sleep(15000);
   await evaluate(page, "chrome.runtime.sendMessage({ type: 'capture' })");
   await sleep(1500);
@@ -199,13 +222,16 @@ try {
   await sleep(600);
   const h1 = await evaluate(popup, "document.querySelector('.popup').getBoundingClientRect().height");
   await add(await frame(openNow, "Click the Tabcove button...", await png(popup, 340, Math.ceil(h1), 2)), 1800);
-  await evaluate(popup, `(() => {
+  await evaluate(
+    popup,
+    `(() => {
     const el = document.querySelector('.popup input');
     const set = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
     set.call(el, 'Client project');
     el.dispatchEvent(new Event('input', { bubbles: true }));
     return true;
-  })()`);
+  })()`,
+  );
   await sleep(300);
   await add(await frame(openNow, "...name it, press Save.", await png(popup, 340, Math.ceil(h1), 2)), 2000);
 
@@ -233,7 +259,11 @@ try {
   await evaluate(page, "chrome.runtime.sendMessage({ type: 'capture' })");
   await evaluate(page, "location.hash = ''; true");
   await waitFor(
-    () => evaluate(page, "!document.body.textContent.includes('Loading') && document.querySelectorAll('.tab').length >= 14"),
+    () =>
+      evaluate(
+        page,
+        "!document.body.textContent.includes('Loading') && document.querySelectorAll('.tab').length >= 14",
+      ),
     100,
     300,
   );
@@ -247,8 +277,14 @@ try {
     <text x="640" y="410" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="34" fill="#dff2f8">Automatic backups. Nothing leaves your computer.</text>
     <text x="640" y="480" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="30" fill="#ffd166">Free: 5 sessions, 24h backups.  Pro: $9.99 once.</text>
   </svg>`);
-  const icon = await sharp(join(root, "public", "icons", "icon-128.png")).resize(120).png().toBuffer();
-  const closing = await sharp(card).composite([{ input: icon, left: 580, top: 160 }]).png().toBuffer();
+  const icon = await sharp(join(root, "public", "icons", "icon-128.png"))
+    .resize(120)
+    .png()
+    .toBuffer();
+  const closing = await sharp(card)
+    .composite([{ input: icon, left: 580, top: 160 }])
+    .png()
+    .toBuffer();
   await add(await sharp(closing).resize(960, 600).png().toBuffer(), 3200);
 
   const gif = await sharp(frames, { join: { animated: true } })
