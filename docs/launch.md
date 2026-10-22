@@ -172,3 +172,95 @@ Website: https://mern-umair.github.io/tabcove/  Pricing: Freemium, one-time purc
 - Gumroad: sales and the day they came; match them to posts.
 - Reddit: comments and upvotes per post; delete nothing, answer everything within hours.
 - Realistic: a post that lands can bring the first sale in 1–3 days; otherwise 100–300 installs take 2–4 weeks.
+
+---
+
+# 7-day sprint texts (added 23 Oct 2026; store links are live, use the Chrome link unless the place is Edge-specific)
+
+Chrome: https://chromewebstore.google.com/detail/tabcove-save-restore-back/ccmjgbajjpimmhdnacanbbhmfjecjnlp
+Edge: https://microsoftedge.microsoft.com/addons/detail/dhjlfjgodmjdbnnpaebngfdiplpdegph
+Launch code (make it on Gumroad first): LAUNCH40, link https://tabcove.gumroad.com/l/pro/LAUNCH40
+
+## WhatsApp / Facebook group / university group text
+
+```
+Mera Chrome extension store par aa gaya hai: Tabcove. Tabs ka automatic backup rakhta hai, Chrome crash ya restart ho ya window galti se band ho jaye to sab ek click mein wapis. Free hai, koi account nahi, data computer se bahar nahi jata. Install karke 2 din use karo aur batao kya kami lagi:
+https://chromewebstore.google.com/detail/tabcove-save-restore-back/ccmjgbajjpimmhdnacanbbhmfjecjnlp
+```
+
+## X / Twitter (attach store/demo.gif)
+
+```
+Chrome restarted for an update and I lost two days of research tabs. So I built Tabcove: automatic tab backups, closed windows kept, one-click restore, everything stays on your computer. Free on the Chrome Web Store, one-time Pro, no subscription.
+https://chromewebstore.google.com/detail/tabcove-save-restore-back/ccmjgbajjpimmhdnacanbbhmfjecjnlp
+```
+
+## Quora answers (questions: "How do I recover tabs after Chrome crashed", "Chrome closed all my tabs, how to get them back", "Best Session Buddy alternative")
+
+```
+Right now: press Ctrl+Shift+T a few times; Chrome reopens closed tabs in order, and it also reopens whole closed windows. If that is empty, open chrome://history, filter by today, select the pages and open them.
+
+For next time, the only real fix is a backup that runs on its own, not one you have to remember to click. I lost two days of tabs this way and built a small extension for it, Tabcove (free, local-only): it backs up every window on a timer, keeps windows you close, and restores a session in one click without loading every tab at once. Any session manager with timed backups will do the same job; the point is to set it up before the next crash.
+```
+
+Disclosure line to add under every Quora answer: "I'm the developer of Tabcove."
+
+## r/indiehackers (flair: SHOW IH)
+
+Title:
+```
+SHOW IH: Tabcove, a tab-backup Chrome extension. Built in 2 days with an AI pair, shipped to both stores, now the hard part: first 100 users
+```
+Body:
+```
+What it is: Chrome/Edge extension that backs up every window automatically, keeps closed windows, restores in one click. Local-only, no account. Free tier, one-time Pro ($9.99, no subscription), licence via Gumroad.
+
+Why: Chrome restarted for an update and I lost two days of research tabs; Session Buddy had lost my saved sessions the week before.
+
+Numbers so far: 0 sales, a few dozen installs from friends, both stores approved in under 24 hours. Plan for the first 100 users: subreddit posts, three press emails, AlternativeTo/SaaSHub, Show HN, Product Hunt next week.
+
+What I want from you: tell me where you would look for a tool like this, and what would make you pay $9.99 once instead of using the free tier.
+
+Store: https://chromewebstore.google.com/detail/tabcove-save-restore-back/ccmjgbajjpimmhdnacanbbhmfjecjnlp
+```
+
+## r/alphaandbetausers and r/betatests
+
+Title:
+```
+[Chrome, Edge] Tabcove – automatic tab backups that restore in one click, looking for feedback on the free tier limits
+```
+Body:
+```
+Tabcove backs up every browser window automatically, keeps windows you close, and restores a session (or just the tabs you tick) in one click with lazy loading. No account, no server, everything stays in your browser. Imports OneTab and Session Buddy exports.
+
+Free: 24 h of backups, 5 saved sessions. Pro is one-time. I want to know whether those limits feel fair, and what you would expect in the free tier.
+
+Chrome: https://chromewebstore.google.com/detail/tabcove-save-restore-back/ccmjgbajjpimmhdnacanbbhmfjecjnlp
+Edge: https://microsoftedge.microsoft.com/addons/detail/dhjlfjgodmjdbnnpaebngfdiplpdegph
+```
+
+## Product Hunt (schedule for Thursday 12:01 AM Pacific = 12:01 PM Pakistan)
+
+Name: Tabcove
+Tagline (60): `Automatic tab backups for Chrome and Edge, local-only`
+Description:
+```
+Tabcove backs up every browser window on its own, keeps the windows you close, and brings any session back in one click. Tabs load lazily, so 200 tabs come back in seconds without eating RAM. Keeps pinned tabs and tab groups, searches every saved session, imports OneTab and Session Buddy. No account, no sync server, no analytics. Free tier; Pro is one payment, not a subscription.
+```
+First comment:
+```
+Maker here. I built Tabcove after a Chrome update ate two days of research tabs. The free tier keeps 24 hours of backups and 5 saved sessions; Pro is $9.99 once. Everything stays in your browser profile; the only network request is the licence check if you buy Pro. Source is public. What would you want in the next version?
+```
+Gallery: store/screenshots/*.png and store/demo.gif. Topics: Chrome Extensions, Productivity, Browser Extensions.
+
+## Reply template for every comment, review and email
+
+```
+Thanks for trying it. [answer the actual question in one or two lines]. If something does not work the way you expect, tell me the steps and I will fix it in the next update; I ship weekly.
+```
+
+## Daily log (fill every night)
+
+| Day | Installs (Chrome dashboard) | Edge installs | Gumroad sales | Posts made | Replies answered |
+|-----|-----|-----|-----|-----|-----|
