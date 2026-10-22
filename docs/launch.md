@@ -6,7 +6,7 @@ conversion). The numbers that matter: free-to-paid for extensions is 0.3–2%, s
 directories and press feed it. Makers who got a sale within days did three things on launch day: good listing,
 one-time price, 3–4 channels at once (not the same link everywhere in one hour).
 
-Store links: Edge (live 22 Oct 2026) https://microsoftedge.microsoft.com/addons/detail/dhjlfjgodmjdbnnpaebngfdiplpdegph ; Chrome: pending. Where a post says [STORE LINK], use the Edge link until Chrome is approved, then both.
+Store links (both live 22 Oct 2026): Chrome https://chromewebstore.google.com/detail/tabcove-save-restore-back/ccmjgbajjpimmhdnacanbbhmfjecjnlp and Edge https://microsoftedge.microsoft.com/addons/detail/dhjlfjgodmjdbnnpaebngfdiplpdegph
 
 ## Before approval (every day, 20 minutes)
 
@@ -17,7 +17,7 @@ Store links: Edge (live 22 Oct 2026) https://microsoftedge.microsoft.com/addons/
 
 ## Approval day (in this order)
 
-1. Me: put the store link in site/index.html (two "chromewebstore.google.com/search/Tabcove" hrefs), README.md,
+1. Me (done 23 Oct): store links are in site/index.html, README.md,
    GUIDE.md, this file; upload 1.0.2 (tabcove-1.0.2.zip) as the first update.
 2. Gumroad (you): Products → Tabcove Pro → Discounts (left menu "Checkout" → "Discounts") → New discount:
    code LAUNCH40, 40% off, limit 50 uses, expires in 7 days. Share link: https://tabcove.gumroad.com/l/pro/LAUNCH40
@@ -83,7 +83,7 @@ Free version keeps 24 hours of backups and 5 saved sessions; there is a one-time
 
 What is missing for you? I'm shipping fixes weekly.
 
-I'm the dev. Store link: [STORE LINK]
+I'm the dev. Store link: https://chromewebstore.google.com/detail/tabcove-save-restore-back/ccmjgbajjpimmhdnacanbbhmfjecjnlp
 ```
 
 ## Post 2: reply for "I lost my tabs" threads
@@ -122,7 +122,7 @@ The hard part was MV3: the service worker is killed after ~30 s, so every snapsh
 ## Post 5: r/software (Wednesday, flair Self-Promotion Wednesdays)
 
 ```
-Tabcove: Chrome/Edge extension that backs up your tabs automatically and restores them in one click. Free tier (24 h of backups, 5 saved sessions). Pro is one-time, and for this week the code LAUNCH40 takes 40% off. Everything stays on your computer. I'm the developer. [STORE LINK]
+Tabcove: Chrome/Edge extension that backs up your tabs automatically and restores them in one click. Free tier (24 h of backups, 5 saved sessions). Pro is one-time, and for this week the code LAUNCH40 takes 40% off. Everything stays on your computer. I'm the developer. https://chromewebstore.google.com/detail/tabcove-save-restore-back/ccmjgbajjpimmhdnacanbbhmfjecjnlp
 ```
 
 ## Press email (adjust the first line per site)
@@ -138,7 +138,7 @@ Tabcove is a Chrome and Edge extension that backs up every window automatically,
 
 Free: 24 hours of backups and 5 saved sessions. Pro: $9.99 once, no subscription.
 
-Store: [STORE LINK]
+Store: https://chromewebstore.google.com/detail/tabcove-save-restore-back/ccmjgbajjpimmhdnacanbbhmfjecjnlp
 Demo GIF and screenshots: https://mern-umair.github.io/tabcove/
 Source: https://github.com/Mern-Umair/tabcove
 
