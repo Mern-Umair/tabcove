@@ -2,7 +2,7 @@
 
 Chrome and Edge extension (Manifest V3) that saves, restores and backs up tabs and windows. Vite + Preact + TypeScript.
 
-Install: [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/dhjifjgodmjdbnnpaebngfdipipdegph) (Chrome Web Store listing is in review).
+Install: [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/dhjlfjgodmjdbnnpaebngfdiplpdegph) (Chrome Web Store listing is in review).
 
 ```
 npm ci

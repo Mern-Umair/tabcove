@@ -9,7 +9,7 @@ Tabcove ek Chrome extension hai jo browser ke tabs save karti hai, wapis kholti 
 hai. Users poori duniya ke hain. Free version 5 saved sessions aur 24 ghante ke backups rakhti hai; Pro $9.99 ek baar
 (Gumroad par) unlimited kar deta hai. Paisa Gumroad se Pakistani bank mein PKR mein aata hai (taqreeban 2 hafte).
 
-Code: `D:\tabs`. GitHub: github.com/Mern-Umair/tabcove (push ke baad). Gumroad product: https://tabcove.gumroad.com/l/pro (product ID code mein hai). Edge Add-ons (live 22 Oct 2026): https://microsoftedge.microsoft.com/addons/detail/dhjifjgodmjdbnnpaebngfdipipdegph . Chrome Web Store: (approval ke baad link yahan likho).
+Code: `D:\tabs`. GitHub: github.com/Mern-Umair/tabcove (push ke baad). Gumroad product: https://tabcove.gumroad.com/l/pro (product ID code mein hai). Edge Add-ons (live 22 Oct 2026): https://microsoftedge.microsoft.com/addons/detail/dhjlfjgodmjdbnnpaebngfdiplpdegph . Chrome Web Store: (approval ke baad link yahan likho).
 
 ## 2. Folder ka naqsha
 

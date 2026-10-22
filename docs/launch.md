@@ -6,7 +6,7 @@ conversion). The numbers that matter: free-to-paid for extensions is 0.3–2%, s
 directories and press feed it. Makers who got a sale within days did three things on launch day: good listing,
 one-time price, 3–4 channels at once (not the same link everywhere in one hour).
 
-Store links: Edge (live 22 Oct 2026) https://microsoftedge.microsoft.com/addons/detail/dhjifjgodmjdbnnpaebngfdipipdegph ; Chrome: pending. Where a post says [STORE LINK], use the Edge link until Chrome is approved, then both.
+Store links: Edge (live 22 Oct 2026) https://microsoftedge.microsoft.com/addons/detail/dhjlfjgodmjdbnnpaebngfdiplpdegph ; Chrome: pending. Where a post says [STORE LINK], use the Edge link until Chrome is approved, then both.
 
 ## Before approval (every day, 20 minutes)
 
