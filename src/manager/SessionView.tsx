@@ -12,7 +12,18 @@ const kindLabel: Record<SessionKind, string> = {
   saved: "Saved session",
 };
 
-export function SessionView({ id, notify, pro }: { id: string; notify: Toast; pro: boolean }) {
+export function SessionView({
+  id,
+  notify,
+  pro,
+  onRestored,
+}: {
+  id: string;
+  notify: Toast;
+  pro: boolean;
+  /** Called with the number of tabs after a successful restore. */
+  onRestored?: (tabs: number) => void;
+}) {
   const session = useSession(id);
   const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -44,6 +55,7 @@ export function SessionView({ id, notify, pro }: { id: string; notify: Toast; pr
     if (response.ok) {
       if (label) notify(label);
       after?.();
+      if (request.type === "restore") onRestored?.(response.restored ?? 0);
     } else notify(response.error, response.limit ? "warn" : "danger");
     return response;
   }

@@ -106,7 +106,8 @@ export function SettingsView(props: {
                 </button>
               </div>
               <span className="help">
-                The key is in the email from Gumroad after purchase. It is checked once, then stays on this computer.
+                The key is in the receipt email from Gumroad (check spam) and at gumroad.com/library. You can paste the
+                whole email; only the key is read. It is checked once, then stays on this computer.
               </span>
             </form>
           </>

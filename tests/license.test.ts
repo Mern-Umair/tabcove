@@ -37,6 +37,14 @@ test("a valid key is sent to Gumroad with the product id and accepted", async ()
   assert.equal(body.get("increment_uses_count"), "false");
 });
 
+test("a key pasted with the whole receipt around it is extracted, case kept", async () => {
+  const api = gumroad({ success: true, purchase: { email: "buyer@example.com" } });
+  const pasted = `Thanks for buying Tabcove Pro!\n\nYour license key: ${KEY.toLowerCase()}\u200B \nKeep it safe.`;
+  const result = await verifyKey(pasted, api.fetcher);
+  assert.equal(result.ok, true);
+  assert.equal(new URLSearchParams(api.calls[0]?.body).get("license_key"), KEY.toLowerCase());
+});
+
 test("an unknown key is refused with Gumroad's message", async () => {
   const api = gumroad({ success: false, message: "That license does not exist for the provided product." }, 404);
   const result = await verifyKey(KEY, api.fetcher);

@@ -72,6 +72,10 @@ export type Settings = {
   saveCount: number;
   /** The one-time review ask was shown and answered. */
   reviewPromptDone: boolean;
+  /** How many restores the user has done, for the review ask. */
+  restoreCount: number;
+  /** When the post-restore Pro nudge was last shown (ms since epoch); 0 = never. */
+  nudgeShownAt: number;
 };
 
 export const defaultSettings: Settings = {
@@ -84,6 +88,8 @@ export const defaultSettings: Settings = {
   installedAt: 0,
   saveCount: 0,
   reviewPromptDone: false,
+  restoreCount: 0,
+  nudgeShownAt: 0,
 };
 
 export type License = {

@@ -24,6 +24,8 @@ export type Response =
       license?: License | null;
       pro?: boolean;
       imported?: number;
+      /** Tabs opened by a restore. */
+      restored?: number;
       error?: never;
     }
   | { ok: false; error: string; limit?: boolean };

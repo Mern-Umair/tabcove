@@ -265,7 +265,8 @@ async function restore(request: Extract<Request, { type: "restore" }>): Promise<
     intoWindowId = last?.id;
   }
   await restoreWindows(windows, { lazy: settings.lazyRestore, intoWindowId });
-  return { ok: true };
+  await setSettings({ restoreCount: settings.restoreCount + 1 });
+  return { ok: true, restored: countTabs(windows) };
 }
 
 async function importText(text: string, name?: string): Promise<Response> {

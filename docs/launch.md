@@ -160,10 +160,10 @@ Tabcove saves, restores and backs up your browser tabs. Every window is backed u
 Alternative to: Session Buddy, OneTab, Toby, Workona, Tab Session Manager. Platforms: Chrome, Edge, Brave.
 Website: https://mern-umair.github.io/tabcove/  Pricing: Freemium, one-time purchase.
 
-## Store "What's new" text for 1.0.2
+## Store "What's new" text for 1.0.3 (upload tabcove-1.0.3.zip to both stores; skip 1.0.2 on Chrome)
 
 ```
-1.0.2: clearer message when the free limit is reached, and a one-time request for a review after a week of use. Tell us what to improve: umairii2207@gmail.com
+1.0.3: the free-limit card now shows your own usage, backups older than 24 hours are flagged before they go, a licence key can be pasted together with the whole receipt email, and a once-a-week reminder after a restore. Tell us what to improve: umairii2207@gmail.com
 ```
 
 ## Measuring

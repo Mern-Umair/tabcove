@@ -41,6 +41,7 @@ export function App() {
   const { pro, refresh: refreshPro } = usePro();
   const [toast, setToast] = useState<{ text: string; kind: string } | null>(null);
   const [proCard, setProCard] = useState(false);
+  const [nudge, setNudge] = useState<number | null>(null);
   const [showAllBackups, setShowAllBackups] = useState(false);
   const [query, setQuery] = useState(route.view === "search" ? route.q : "");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -93,6 +94,18 @@ export function App() {
   );
   const shownBackups = showAllBackups ? backups : backups.slice(0, 12);
   const activeId = route.view === "session" ? route.id : null;
+  const recentBackups = useMemo(() => {
+    const since = Date.now() - 24 * 60 * 60 * 1000;
+    return backups.filter((s) => s.createdAt >= since).length;
+  }, [backups]);
+
+  /** After a restore, free users see once a week what Pro would have kept. */
+  function onRestored(tabs: number) {
+    if (pro || !settings || tabs === 0) return;
+    if (Date.now() - settings.nudgeShownAt < NUDGE_EVERY_MS) return;
+    setNudge(tabs);
+    void updateSettings({ nudgeShownAt: Date.now() });
+  }
 
   async function saveNow() {
     const response = await send({ type: "save" });
@@ -168,6 +181,11 @@ export function App() {
             <span>Backups and closed windows</span>
             <span className="small">{backups.length}</span>
           </h2>
+          {!pro && backups.length > 0 && (
+            <a className="help nudge" href={PRO_URL} target="_blank" rel="noopener">
+              Free keeps backups for 24 hours. Pro keeps them.
+            </a>
+          )}
           {backups.length === 0 && (
             <p className="help" style="padding: 2px 8px 6px">
               Backups appear here automatically.
@@ -203,8 +221,13 @@ export function App() {
       </aside>
 
       <main className="main">
-        {proCard && !pro && <ProCard saved={saved.length} onClose={() => setProCard(false)} />}
-        {route.view === "session" && <SessionView id={route.id} notify={notify} pro={pro} />}
+        {proCard && !pro && (
+          <ProCard saved={saved.length} recentBackups={recentBackups} onClose={() => setProCard(false)} />
+        )}
+        {nudge !== null && !pro && !proCard && <RestoreNudge tabs={nudge} onClose={() => setNudge(null)} />}
+        {route.view === "session" && (
+          <SessionView id={route.id} notify={notify} pro={pro} onRestored={onRestored} />
+        )}
         {route.view === "search" && <SearchView query={route.q} notify={notify} />}
         {route.view === "settings" && settings && (
           <SettingsView settings={settings} update={updateSettings} pro={pro} refreshPro={refreshPro} notify={notify} />
@@ -221,12 +244,21 @@ export function App() {
   );
 }
 
-/** Shown when a free limit is hit: what Pro gives, the price, and a way out that is not buying. */
-function ProCard({ saved, onClose }: { saved: number; onClose: () => void }) {
+const NUDGE_EVERY_MS = 7 * 24 * 60 * 60 * 1000;
+
+/** Shown when a free limit is hit: the user's own numbers, what Pro gives, the price, and a way out that is not buying. */
+function ProCard({ saved, recentBackups, onClose }: { saved: number; recentBackups: number; onClose: () => void }) {
   return (
     <section className="card procard" role="dialog" aria-label="Tabcove Pro">
-      <h2>You have {saved} saved sessions, the free limit</h2>
-      <p>Delete a session you no longer need, or get Pro once and never think about it again:</p>
+      <h2>
+        You are using all {saved} of {FREE_SAVED_SESSIONS} free session slots
+      </h2>
+      <p>
+        {recentBackups > 0
+          ? `Your ${plural(recentBackups, "backup")} from the last 24 hours will be deleted tomorrow on the free plan. `
+          : ""}
+        Delete a session you no longer need, or get Pro once and never think about it again:
+      </p>
       <ul>
         <li>Unlimited saved sessions</li>
         <li>Every backup kept for as long as you choose (free keeps 24 hours)</li>
@@ -246,8 +278,29 @@ function ProCard({ saved, onClose }: { saved: number; onClose: () => void }) {
   );
 }
 
+/** Once a week at most, right after Tabcove did something useful for a free user. */
+function RestoreNudge({ tabs, onClose }: { tabs: number; onClose: () => void }) {
+  return (
+    <div className="review restore-nudge" role="note">
+      <span className="small">
+        Tabcove just brought back {plural(tabs, "tab")}. Free keeps backups for 24 hours; Pro keeps every backup and
+        unlimited sessions, {PRO_PRICE_LABEL}.
+      </span>
+      <div className="row">
+        <a className="btn sm primary" href={PRO_URL} target="_blank" rel="noopener" onClick={onClose}>
+          Get Pro
+        </a>
+        <button className="btn sm ghost" type="button" onClick={onClose}>
+          Dismiss
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const REVIEW_AFTER_MS = 7 * 24 * 60 * 60 * 1000;
 const REVIEW_AFTER_SAVES = 3;
+const REVIEW_AFTER_RESTORES = 3;
 
 /** Where this install came from decides where a review goes. */
 function reviewUrl(): string {
@@ -263,7 +316,7 @@ function ReviewAsk({ settings, update }: { settings: Settings; update: (patch: P
     !settings.reviewPromptDone &&
     settings.installedAt > 0 &&
     Date.now() - settings.installedAt >= REVIEW_AFTER_MS &&
-    settings.saveCount >= REVIEW_AFTER_SAVES;
+    (settings.saveCount >= REVIEW_AFTER_SAVES || settings.restoreCount >= REVIEW_AFTER_RESTORES);
   if (!due) return null;
   const done = () => void update({ reviewPromptDone: true });
   return (

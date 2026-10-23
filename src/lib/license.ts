@@ -13,10 +13,24 @@ const GRACE_MS = 30 * 24 * 60 * 60 * 1000;
 
 export type VerifyResult = { ok: true; email?: string } | { ok: false; reason: string; offline?: boolean };
 
+/**
+ * Pulls the key out of whatever was pasted: the bare key, the key with spaces or
+ * invisible characters around it, or the whole Gumroad receipt. Case is kept.
+ */
+export function extractKey(raw: string): string | null {
+  const cleaned = raw.replace(/[\s\u200B-\u200D\uFEFF]/g, "");
+  const match = cleaned.match(/[A-Z0-9]{8}-[A-Z0-9]{8}-[A-Z0-9]{8}-[A-Z0-9]{8}/i);
+  return match ? match[0] : null;
+}
+
 export async function verifyKey(key: string, fetcher: typeof fetch = fetch): Promise<VerifyResult> {
-  const trimmed = key.trim();
-  if (!/^[A-Z0-9]{8}(-[A-Z0-9]{8}){3}$/i.test(trimmed)) {
-    return { ok: false, reason: "A licence key looks like XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX." };
+  const trimmed = extractKey(key);
+  if (!trimmed) {
+    return {
+      ok: false,
+      reason:
+        "No licence key found. It looks like XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX and is in the Gumroad receipt email (check spam) or at gumroad.com/library.",
+    };
   }
   if (!GUMROAD_PRODUCT_ID) return { ok: false, reason: "Licence checks are not set up in this build." };
   let response: globalThis.Response;

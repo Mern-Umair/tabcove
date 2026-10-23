@@ -242,6 +242,18 @@ label.row {
   align-items: center;
   gap: 8px;
 }
+.nudge {
+  display: block;
+  padding: 2px 8px 6px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.nudge:hover {
+  text-decoration: underline;
+}
+.restore-nudge {
+  margin-bottom: 16px;
+}
 .review {
   display: grid;
   gap: 8px;
